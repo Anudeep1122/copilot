@@ -6,9 +6,10 @@ export default function Activities() {
 
   useEffect(() => {
     const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+    const endpoint = '/api/activities';
     const apiUrl = codespaceName
-      ? `https://${codespaceName}-8000.app.github.dev/api/activities`
-      : 'http://localhost:8000/api/activities';
+      ? `https://${codespaceName}-8000.app.github.dev${endpoint}`
+      : `http://localhost:8000${endpoint}`;
 
     fetch(apiUrl)
       .then((response) => response.json())

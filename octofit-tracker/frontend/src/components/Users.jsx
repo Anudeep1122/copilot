@@ -6,9 +6,10 @@ export default function Users() {
 
   useEffect(() => {
     const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+    const endpoint = '/api/users';
     const apiUrl = codespaceName
-      ? `https://${codespaceName}-8000.app.github.dev/api/users`
-      : 'http://localhost:8000/api/users';
+      ? `https://${codespaceName}-8000.app.github.dev${endpoint}`
+      : `http://localhost:8000${endpoint}`;
 
     fetch(apiUrl)
       .then((response) => response.json())

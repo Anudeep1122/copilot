@@ -6,9 +6,10 @@ export default function Workouts() {
 
   useEffect(() => {
     const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+    const endpoint = '/api/workouts';
     const apiUrl = codespaceName
-      ? `https://${codespaceName}-8000.app.github.dev/api/workouts`
-      : 'http://localhost:8000/api/workouts';
+      ? `https://${codespaceName}-8000.app.github.dev${endpoint}`
+      : `http://localhost:8000${endpoint}`;
 
     fetch(apiUrl)
       .then((response) => response.json())

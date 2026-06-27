@@ -6,9 +6,10 @@ export default function Teams() {
 
   useEffect(() => {
     const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+    const endpoint = '/api/teams';
     const apiUrl = codespaceName
-      ? `https://${codespaceName}-8000.app.github.dev/api/teams`
-      : 'http://localhost:8000/api/teams';
+      ? `https://${codespaceName}-8000.app.github.dev${endpoint}`
+      : `http://localhost:8000${endpoint}`;
 
     fetch(apiUrl)
       .then((response) => response.json())
