@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
-import { getApiUrl } from '../utils/api';
 
 export default function Workouts() {
   const [workouts, setWorkouts] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(getApiUrl('/api/workouts'))
+    const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+    const apiUrl = codespaceName
+      ? `https://${codespaceName}-8000.app.github.dev/api/workouts`
+      : 'http://localhost:8000/api/workouts';
+
+    fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => setWorkouts(Array.isArray(data) ? data : data.results || []))
       .catch((err) => setError(err.message));

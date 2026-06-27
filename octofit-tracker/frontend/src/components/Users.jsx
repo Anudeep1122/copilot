@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
-import { getApiUrl } from '../utils/api';
 
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(getApiUrl('/api/users'))
+    const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+    const apiUrl = codespaceName
+      ? `https://${codespaceName}-8000.app.github.dev/api/users`
+      : 'http://localhost:8000/api/users';
+
+    fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => setUsers(Array.isArray(data) ? data : data.results || []))
       .catch((err) => setError(err.message));
