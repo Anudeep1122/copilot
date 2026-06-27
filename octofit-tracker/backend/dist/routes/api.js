@@ -1,40 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
+const Activity_1 = require("../models/Activity");
+const LeaderboardEntry_1 = require("../models/LeaderboardEntry");
+const Team_1 = require("../models/Team");
+const User_1 = require("../models/User");
+const Workout_1 = require("../models/Workout");
 const router = (0, express_1.Router)();
-const users = [
-    { id: 1, name: 'Ava', role: 'Student' },
-    { id: 2, name: 'Noah', role: 'Coach' },
-];
-const teams = [
-    { id: 1, name: 'Trailblazers', members: 8 },
-    { id: 2, name: 'Speedsters', members: 6 },
-];
-const activities = [
-    { id: 1, name: 'Morning Run', points: 20 },
-    { id: 2, name: 'Strength Training', points: 25 },
-];
-const leaderboard = [
-    { id: 1, name: 'Ava', score: 180 },
-    { id: 2, name: 'Noah', score: 165 },
-];
-const workouts = [
-    { id: 1, title: 'Cardio Circuit', duration: '20 min' },
-    { id: 2, title: 'Core Focus', duration: '15 min' },
-];
-router.get('/users/', (_req, res) => {
+router.get('/users/', async (_req, res) => {
+    const users = await User_1.User.find({}).lean();
     res.json(users);
 });
-router.get('/teams/', (_req, res) => {
+router.get('/teams/', async (_req, res) => {
+    const teams = await Team_1.Team.find({}).populate('members').lean();
     res.json(teams);
 });
-router.get('/activities/', (_req, res) => {
+router.get('/activities/', async (_req, res) => {
+    const activities = await Activity_1.Activity.find({}).lean();
     res.json(activities);
 });
-router.get('/leaderboard/', (_req, res) => {
+router.get('/leaderboard/', async (_req, res) => {
+    const leaderboard = await LeaderboardEntry_1.LeaderboardEntry.find({}).populate('userId').lean();
     res.json(leaderboard);
 });
-router.get('/workouts/', (_req, res) => {
+router.get('/workouts/', async (_req, res) => {
+    const workouts = await Workout_1.Workout.find({}).lean();
     res.json(workouts);
 });
 exports.default = router;
