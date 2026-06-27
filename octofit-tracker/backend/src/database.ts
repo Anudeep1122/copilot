@@ -1,6 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-export async function connectToDatabase() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/octofit_db');
-  return mongoose.connection;
+const MONGO_URI = "mongodb://localhost:27017/octofit_db";
+
+export async function connectDatabase() {
+  try {
+    await mongoose.connect(MONGO_URI);
+    console.log("Connected to MongoDB");
+  } catch (error) {
+    console.error("MongoDB connection failed:", error);
+    process.exit(1);
+  }
 }
