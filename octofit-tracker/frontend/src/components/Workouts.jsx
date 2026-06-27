@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { fetchApiData } from '../utils/api';
+import { getApiUrl } from '../utils/api';
 
 export default function Workouts() {
   const [workouts, setWorkouts] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchApiData('workouts')
-      .then((data) => setWorkouts(data))
+    fetch(getApiUrl('/api/workouts'))
+      .then((response) => response.json())
+      .then((data) => setWorkouts(Array.isArray(data) ? data : data.results || []))
       .catch((err) => setError(err.message));
   }, []);
 

@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { fetchApiData } from '../utils/api';
+import { getApiUrl } from '../utils/api';
 
 export default function Teams() {
   const [teams, setTeams] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchApiData('teams')
-      .then((data) => setTeams(data))
+    fetch(getApiUrl('/api/teams'))
+      .then((response) => response.json())
+      .then((data) => setTeams(Array.isArray(data) ? data : data.results || []))
       .catch((err) => setError(err.message));
   }, []);
 

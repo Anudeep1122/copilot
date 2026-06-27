@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { fetchApiData } from '../utils/api';
+import { getApiUrl } from '../utils/api';
 
 export default function Users() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchApiData('users')
-      .then((data) => setUsers(data))
+    fetch(getApiUrl('/api/users'))
+      .then((response) => response.json())
+      .then((data) => setUsers(Array.isArray(data) ? data : data.results || []))
       .catch((err) => setError(err.message));
   }, []);
 

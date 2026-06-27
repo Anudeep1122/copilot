@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import { fetchApiData } from '../utils/api';
+import { getApiUrl } from '../utils/api';
 
 export default function Activities() {
   const [activities, setActivities] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetchApiData('activities')
-      .then((data) => setActivities(data))
+    fetch(getApiUrl('/api/activities'))
+      .then((response) => response.json())
+      .then((data) => setActivities(Array.isArray(data) ? data : data.results || []))
       .catch((err) => setError(err.message));
   }, []);
 
